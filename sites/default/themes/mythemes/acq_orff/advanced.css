@@ -1,0 +1,161 @@
+body {
+  background-color: #ffffff;
+}
+#content-area .node-promoted, #breadcrumb {
+  display: none;
+}
+#sidebar-a {
+  min-height: 0 !important;
+}
+.node-course .field-name-field-contact .field-items h2 {
+  display: none;
+}
+#block-block-6, #block-brochure-block_1 {
+  text-align: center;
+}
+#block-block-6 p a, .download-brochure a {
+  background: #6b046b;
+  border-radius: 5px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px;
+  position: absolute;
+  left: 0;
+}
+#block-block-6 p a:link, #block-block-6 p a:visited, #block-block-6 p a:hover, #block-block-6 p a:active,
+.download-brochure a:link, .download-brochure a:visited, .download-brochure a:hover, .download-brochure a:active {
+  color: #ffffff;
+}
+#banner {
+  border-bottom: 1px solid #aaaaaa;
+  padding-bottom: 20px;
+}
+.view-news h2 a, .view-resources h2 a, .view-workshops a h2, .view-workshops a,
+.view a h2 {
+  color: #186fc7;
+  font-size: 16px;
+  text-decoration: none;
+}
+.view-news .views-row {
+  margin-bottom: 30px;
+}
+.view-news.view-display-id-page h2 a {
+  font-size: 20px;
+}
+.node-readmore a, .node-readmore a:link, .node-readmore a:visited, .node-readmore a:hover, .node-readmore a:active {
+  color: #aaaaaa;
+  font-size: 12px;
+  text-decoration: underline;
+}
+a, a:link, a:visited, a:hover, a:active {
+  color: #186fc7;
+  text-decoration: none;
+}
+#block-system-main-menu ul {
+  background: #ffffff;
+  border-bottom: 5px solid #333333;
+}
+#block-system-main-menu ul li {
+  position: relative;
+}
+#block-system-main-menu ul li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 999;
+  border: none;
+}
+#block-system-main-menu ul li ul li {
+  float: none;
+  white-space: nowrap;
+  border-top: 1px solid #999999;
+  border-width: 1px 0 0 0;
+}
+#block-system-main-menu ul li ul li.last {
+  border-bottom: 1px solid #999999;
+}
+#block-system-main-menu ul li:hover ul {
+  display: block;
+}
+
+.node-workwhop .field-name-field-workshop-image {
+  float: left;
+}
+.node-workwhop .field-name-body {
+  float: left;
+}
+a, a:link, a:visited, a:hover, a:active {
+  color: #186fc7;
+}
+.view-courses .field-content a, 
+.view-courses .field-content a:link,
+.view-courses .field-content a:visited,
+.view-courses .field-content a:hover,
+.view-courses .field-content a:active {
+  font-size: 17px;
+  text-decoration: none;
+}
+.sidebar .block {
+  border-width: 0;
+}
+.sidebar.left {
+  margin-right: 6%;
+}
+.view-paypal-buttons .views-field-body {
+  float: right;
+  margin-top: -3px;
+  margin-right: 12px;
+}
+.view-paypal-buttons .views-field-field-fee {
+  float: left;
+  clear: both;
+  padding: 18px 0;
+}
+.view-paypal-buttons .views-row {
+  clear: both;
+  padding: 15px 5px 60px 0px;
+  margin: 10px 0;
+  display: block;
+}
+.view-workshops .views-row {
+}
+.view-workshops .views-field-title h2 {
+  font-size: 20px;
+}
+.view-workshops .views-field-field-date {
+  margin-top: 10px;
+  padding: 0;
+}
+.view-workshops .views-field-nothing {
+  margin-top: 0;
+  padding-top: 0;
+}
+.view-workshops .views-field-nothing .workshop-image {
+  float: left;
+  margin: 8px 20px 0 0;
+}
+.view-workshops .views-field-nothing .body-container {
+}
+.view-workshops .views-field-view-node {
+  margin-top: 18px;
+}
+.view-workshops .views-field-view-node a {
+  font-size: 20px;
+}
+.clearfix {
+  clear: both;
+}
+#banner, .rotating-banner .controls {
+  padding: 0px;
+  margin: 0px;
+}
+.rotating-banner .rb-slides {
+  border: 0px !important;
+}
+.node-unpublished {
+  background-color: #fff4f4;
+}
+.field-type-text-with-summary p {
+  margin: 8px 0;
+}

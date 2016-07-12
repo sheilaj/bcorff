@@ -1,0 +1,77 @@
+
+
+#precontent-second-region .view-news .field-item p {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#main .view-news h2 a {
+  line-height: 250%;
+  font-size: 20px;
+}
+
+#main h2 a {
+  font-size: 18px;
+}
+
+#precontent-first-region .view-workshops-courses a h2 {
+  font-size: 18px;
+}
+
+#precontent-second-region h2 {
+  font-size: 20px;
+}
+
+#precontent-first-region h2 {
+  font-size: 20px;
+}
+
+#precontent-second-region .view-news h2 a {
+  font-size: 18px;
+}
+
+#main p b {
+  font-size: 22px;
+  color: #6b046b;
+}
+
+#precontent {
+  margin-top: 10px;
+}
+
+#main .field-item h2 {
+  color: #6b046b;
+}
+
+h2 {
+  color: #6b046b;
+}
+
+#main #page-title {
+  color: #9c9c1c;
+}
+
+#main .file a {
+  color: #186fc7;
+}
+
+#navigation-region li a {
+  color: #111111;
+}
+
+.node h2 {
+  margin-bottom: 10px;
+}
+
+.field-item {
+  margin-top: 6px;
+}
+
+#content-inner {
+  font-size: 15px;
+  padding-top: 10px;
+  margin-top: 20px;
+  border-top-width: 0px;
+  border-style: none;
+}
+
