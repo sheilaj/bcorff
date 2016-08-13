@@ -1145,10 +1145,7 @@ function system_modules_submit($form, &$form_state) {
       // in the confirmation form that more modules need to be enabled.
       $dependencies = array();
       foreach (array_keys($files[$name]->requires) as $required) {
-        // If the dependency is set to be disabled, or if it doesn't appear on
-        // the form (e.g., is hidden or missing) and isn't already enabled,
-        // flag it as needing to be enabled now.
-        if ((isset($modules[$required]['enabled']) && !$modules[$required]['enabled']) || (!isset($modules[$required]['enabled']) && !module_exists($required))) {
+        if (empty($modules[$required]['enabled'])) {
           if (isset($files[$required])) {
             $dependencies[] = $files[$required]->info['name'];
             $modules[$required]['enabled'] = TRUE;
@@ -1670,7 +1667,7 @@ function system_logging_settings() {
   $form['error_level'] = array(
     '#type' => 'radios',
     '#title' => t('Error messages to display'),
-    '#default_value' => variable_get('error_level', ERROR_REPORTING_HIDE),
+    '#default_value' => variable_get('error_level', ERROR_REPORTING_DISPLAY_ALL),
     '#options' => array(
       ERROR_REPORTING_HIDE => t('None'),
       ERROR_REPORTING_DISPLAY_SOME => t('Errors and warnings'),
@@ -1859,7 +1856,7 @@ function system_image_toolkit_settings() {
   if (count($toolkits_available) == 0) {
     variable_del('image_toolkit');
     $form['image_toolkit_help'] = array(
-      '#markup' => t("No image toolkits were detected. Drupal includes support for <a href='!gd-link'>PHP's built-in image processing functions</a> but they were not detected on this system. You should consult your system administrator to have them enabled, or try using a third party toolkit.", array('gd-link' => url('http://php.net/gd'))),
+      '#markup' => t("No image toolkits were detected. Drupal includes support for <a href='!gd-link'>PHP's built-in image processing functions</a> but they were not detected on this system. You should consult your system administrator to have them enabled, or try using a third party toolkit.", array('!gd-link' => url('http://php.net/gd'))),
     );
     return $form;
   }

@@ -61,26 +61,6 @@ define('FILE_EXISTS_REPLACE', 1);
 define('FILE_EXISTS_ERROR', 2);
 
 /**
- * Flag for determining if a file exists: Return TRUE if the file itself exists.
- */
-define('FILE_CHECK_EXISTS_FILE', 0);
-
-/**
- * Flag for determining if a file exists: Return TRUE if the file entity exists.
- */
-define('FILE_CHECK_EXISTS_ENTITY', 1);
-
-/**
- * Flag for determining if a file exists: Return TRUE if both the file and the file entity exist.
- */
-define('FILE_CHECK_EXISTS_FILE_AND_ENTITY', 2);
-
-/**
- * Flag for determining if a file exists: Return TRUE if either the file or the file entity exists.
- */
-define('FILE_CHECK_EXISTS_FILE_OR_ENTITY', 3);
-
-/**
  * Indicates that the file is permanent and should not be deleted.
  *
  * Temporary files older than DRUPAL_MAXIMUM_TEMP_FILE_AGE will be removed
@@ -997,15 +977,13 @@ function file_build_uri($path) {
  *   - FILE_EXISTS_RENAME - Append _{incrementing number} until the filename is
  *       unique.
  *   - FILE_EXISTS_ERROR - Do nothing and return FALSE.
- * @param $check
- *   Which file existence check to perform. Passed to drupal_file_exists().
  *
  * @return
  *   The destination filepath, or FALSE if the file already exists
  *   and FILE_EXISTS_ERROR is specified.
  */
-function file_destination($destination, $replace, $check = FILE_CHECK_EXISTS_FILE) {
-  if (drupal_file_exists($destination, $check)) {
+function file_destination($destination, $replace) {
+  if (file_exists($destination)) {
     switch ($replace) {
       case FILE_EXISTS_REPLACE:
         // Do nothing here, we want to overwrite the existing file.
@@ -1014,7 +992,7 @@ function file_destination($destination, $replace, $check = FILE_CHECK_EXISTS_FIL
       case FILE_EXISTS_RENAME:
         $basename = drupal_basename($destination);
         $directory = drupal_dirname($destination);
-        $destination = file_create_filename($basename, $directory, $check);
+        $destination = file_create_filename($basename, $directory);
         break;
 
       case FILE_EXISTS_ERROR:
@@ -1224,14 +1202,12 @@ function file_unmunge_filename($filename) {
  *   String filename
  * @param $directory
  *   String containing the directory or parent URI.
- * @param $check
- *   Which file existence check to perform. Passed to drupal_file_exists().
  *
  * @return
  *   File path consisting of $directory and a unique filename based off
  *   of $basename.
  */
-function file_create_filename($basename, $directory, $check = FILE_CHECK_EXISTS_FILE) {
+function file_create_filename($basename, $directory) {
   // Strip control characters (ASCII value < 32). Though these are allowed in
   // some filesystems, not many applications handle them well.
   $basename = preg_replace('/[\x00-\x1F]/u', '_', $basename);
@@ -1250,7 +1226,7 @@ function file_create_filename($basename, $directory, $check = FILE_CHECK_EXISTS_
 
   $destination = $directory . $separator . $basename;
 
-  if (drupal_file_exists($destination, $check)) {
+  if (file_exists($destination)) {
     // Destination file already exists, generate an alternative.
     $pos = strrpos($basename, '.');
     if ($pos !== FALSE) {
@@ -1265,7 +1241,7 @@ function file_create_filename($basename, $directory, $check = FILE_CHECK_EXISTS_
     $counter = 0;
     do {
       $destination = $directory . $separator . $name . '_' . $counter++ . $ext;
-    } while (drupal_file_exists($destination, $check));
+    } while (file_exists($destination));
   }
 
   return $destination;
@@ -1548,6 +1524,7 @@ function file_save_upload($form_field_name, $validators = array(), $destination 
   // evaluates to TRUE.
   if (!variable_get('allow_insecure_uploads', 0) && preg_match('/\.(php|pl|py|cgi|asp|js)(\.|$)/i', $file->filename) && (substr($file->filename, -4) != '.txt')) {
     $file->filemime = 'text/plain';
+    $file->uri .= '.txt';
     $file->filename .= '.txt';
     // The .txt extension may not be in the allowed list of extensions. We have
     // to add it here or else the file upload will fail.
@@ -1574,7 +1551,7 @@ function file_save_upload($form_field_name, $validators = array(), $destination 
   if (substr($destination, -1) != '/') {
     $destination .= '/';
   }
-  $file->destination = file_destination($destination . $file->filename, $replace, FILE_CHECK_EXISTS_FILE_OR_ENTITY);
+  $file->destination = file_destination($destination . $file->filename, $replace);
   // If file_destination() returns FALSE then $replace == FILE_EXISTS_ERROR and
   // there's an existing file so we need to bail.
   if ($file->destination === FALSE) {
@@ -2045,7 +2022,7 @@ function file_download() {
  *
  * @see file_transfer()
  * @see file_download_access()
- * @see hook_file_downlaod()
+ * @see hook_file_download()
  */
 function file_download_headers($uri) {
   // Let other modules provide headers and control access to the file.
@@ -2304,52 +2281,6 @@ function drupal_unlink($uri, $context = NULL) {
   else {
     return unlink($uri);
   }
-}
-
-/**
- * Checks whether a file exists.
- *
- * PHP's file_exists() only checks the file itself, not the Drupal entity.
- *
- * @param $uri
- *   A URI or pathname.
- * @param $check
- *   One of:
- *   - FILE_CHECK_EXISTS_FILE
- *   - FILE_CHECK_EXISTS_ENTITY
- *   - FILE_CHECK_EXISTS_FILE_AND_ENTITY
- *   - FILE_CHECK_EXISTS_FILE_OR_ENTITY
- *
- * @return
- *   Boolean TRUE if the file exists based on the requested check. FALSE
- *   otherwise.
- *
- * @see file_exists()
- * @ingroup php_wrappers
- */
-function drupal_file_exists($uri, $check = FILE_CHECK_EXISTS_FILE) {
-  switch ($check) {
-    case FILE_CHECK_EXISTS_FILE:
-      return file_exists($uri);
-    case FILE_CHECK_EXISTS_ENTITY:
-      return _drupal_file_entity_exists($uri);
-    case FILE_CHECK_EXISTS_FILE_AND_ENTITY:
-      return file_exists($uri) && _drupal_file_entity_exists($uri);
-    case FILE_CHECK_EXISTS_FILE_OR_ENTITY:
-      return file_exists($uri) || _drupal_file_entity_exists($uri);
-  }
-}
-
-/**
- * Helper function used by drupal_file_exists() to check if a file entity with the requested URI exists.
- */
-function _drupal_file_entity_exists($uri) {
-  $query = new EntityFieldQuery();
-  return (bool) $query
-    ->entityCondition('entity_type', 'file')
-    ->propertyCondition('uri', $uri)
-    ->count()
-    ->execute();
 }
 
 /**

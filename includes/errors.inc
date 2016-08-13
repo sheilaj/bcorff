@@ -149,7 +149,7 @@ function _drupal_render_exception_safe($exception) {
  *   TRUE if an error should be displayed.
  */
 function error_displayable($error = NULL) {
-  $error_level = variable_get('error_level', ERROR_REPORTING_HIDE);
+  $error_level = variable_get('error_level', ERROR_REPORTING_DISPLAY_ALL);
   $updating = (defined('MAINTENANCE_MODE') && MAINTENANCE_MODE == 'update');
   $all_errors_displayed = ($error_level == ERROR_REPORTING_DISPLAY_ALL);
   $error_needs_display = ($error_level == ERROR_REPORTING_DISPLAY_SOME &&
@@ -199,7 +199,16 @@ function _drupal_log_error($error, $fatal = FALSE) {
     $number++;
   }
 
-  watchdog('php', '%type: !message in %function (line %line of %file).', $error, $error['severity_level']);
+  // Log the error immediately, unless this is a non-fatal error which has been
+  // triggered via drupal_trigger_error_with_delayed_logging(); in that case
+  // trigger it in a shutdown function. Fatal errors are always triggered
+  // immediately since for a fatal error the page request will end here anyway.
+  if (!$fatal && drupal_static('_drupal_trigger_error_with_delayed_logging')) {
+    drupal_register_shutdown_function('watchdog', 'php', '%type: !message in %function (line %line of %file).', $error, $error['severity_level']);
+  }
+  else {
+    watchdog('php', '%type: !message in %function (line %line of %file).', $error, $error['severity_level']);
+  }
 
   if ($fatal) {
     drupal_add_http_header('Status', '500 Service unavailable (with message)');
