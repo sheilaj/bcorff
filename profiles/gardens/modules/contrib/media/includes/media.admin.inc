@@ -310,16 +310,6 @@ function media_admin_type_manage_form($form, &$form_state, $media_type) {
     '#type' => 'value',
     '#value' => $media_type->name,
   );
-  
-  foreach (file_info_file_types() as $name => $type) {
-    $options[$name] = $type['label'];
-  }
-  $form[media_variable_name('wysiwyg_allowed_types')] = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Allowed types in WYSIWYG'),
-    '#options' => $options,
-    '#default_value' => media_variable_get('wysiwyg_allowed_types'),
-  );
 
   // If this Media type is handled by us, then we can put in some default
   // options. Otherwise, we leave it to the implementing module to form_alter.
