@@ -69,4 +69,29 @@ h2 {
   border-top-width: 0px;
   border-style: none;
 }
-
+#block-views-news-block-2 {
+  border: 1px solid #aaaaaa;
+  padding: 8px;
+  background-color: #fef5f1;
+}
+#block-views-news-block-2 .title {
+  color: #186fc7;
+}
+span.music-note {
+  background: url("/sites/default/themes/mythemes/acq_orff/images/music_note.png") 100% no-repeat;
+  padding: 10px 25px 2px 0px;
+}
+.view-news.view-display-id-page .views-row {
+  border-bottom: 1px solid #999999;
+  padding-bottom: 25px;
+}
+.view-news.view-display-id-page .views-row.views-row-last {
+  border-bottom: none;
+}
+.col.left {
+  margin-left: 3%;
+  padding-left: 2%;
+}
+.col-2 .col {
+  width: 47%;
+}
