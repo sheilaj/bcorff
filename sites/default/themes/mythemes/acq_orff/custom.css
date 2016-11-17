@@ -95,3 +95,12 @@ span.music-note {
 .col-2 .col {
   width: 47%;
 }
+.view-paypal-sidebar .views-field-body {
+  margin-right: 0;
+}
+.view-paypal-sidebar .field-content {
+  margin-right: 0;
+}
+.view-paypal-sidebar form {
+  margin-right: 0;
+}
