@@ -79,8 +79,8 @@ h2 {
 }
 span.music-note {
   background: url("/sites/default/themes/mythemes/acq_orff/images/music_note.png") 100% no-repeat;
-  padding: 10px 25px 2px 0px;
-  font-size: 28px;
+  padding: 10px 25px 5px 0px;
+  font-size: 26px;
 }
 .view-news.view-display-id-page .views-row {
   border-bottom: 1px solid #999999;
@@ -98,4 +98,12 @@ span.music-note {
 }
 .view-paypal-sidebar form {
   margin: -25px 0 0 0;
+}
+.region-sidebar-b .block-views h2 {
+  font-size: 26px;
+}
+.region-sidebar-b .block-views .view-news h2,
+.region-sidebar-b .block-views .view-news h2 a {
+  font-size: 20px;
+  line-height: 100%;
 }
