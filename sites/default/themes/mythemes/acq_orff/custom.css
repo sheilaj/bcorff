@@ -1,6 +1,6 @@
 
 
-#precontent-second-region .view-news .field-item p {
+#precontent-second-region .view-news p {
   font-size: 16px;
 }
 
@@ -70,7 +70,7 @@ h2 {
   border-style: none;
 }
 #block-views-news-block-2 {
-  border: 1px solid #aaaaaa;
+  border: 2px solid #6b046b;
   padding: 8px;
   background-color: #fef5f1;
 }
@@ -80,6 +80,7 @@ h2 {
 span.music-note {
   background: url("/sites/default/themes/mythemes/acq_orff/images/music_note.png") 100% no-repeat;
   padding: 10px 25px 2px 0px;
+  font-size: 28px;
 }
 .view-news.view-display-id-page .views-row {
   border-bottom: 1px solid #999999;
